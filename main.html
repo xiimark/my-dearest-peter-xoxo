@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my-dearest-peter-xoxo</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        overflow: hidden;
+        background: linear-gradient(
+          to bottom,
+          #0a1628 0%,
+          #1a2744 50%,
+          #2d3e5c 100%
+        );
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      /* 눈송이 */
+      .snowflake {
+        position: fixed;
+        top: -10px;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1em;
+        user-select: none;
+        z-index: 1000;
+        animation: fall linear infinite;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+        }
+      }
+
+      /* 컨테이너 */
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 트리 이미지 */
+      .tree-image {
+        max-width: 90%;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        cursor: pointer;
+        transition: opacity 1s ease;
+        z-index: 10;
+        position: relative;
+        user-select: none;
+        -webkit-user-drag: none;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .tree-image:hover {
+        filter: brightness(1.02);
+      }
+
+      .tree-image:active {
+        transform: none;
+      }
+
+      .tree-image.fade-out {
+        opacity: 0;
+      }
+
+      .tree-image.hidden {
+        display: none;
+      }
+
+      /* Click Me 힌트 */
+      .click-hint {
+        position: absolute;
+        bottom: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.3em;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        animation: pulse 2s ease-in-out infinite;
+        z-index: 15;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+
+      .click-hint.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.7;
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+
+      /* 흰색 편지지 */
+      .letter-paper {
+        position: fixed;
+        width: 85%;
+        height: 85vh;
+        max-width: 800px;
+        max-height: 700px;
+        background: #ffffff;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: all 1s ease;
+        z-index: 50;
+        pointer-events: none;
+        padding: 20px;
+      }
+
+      .letter-paper.show {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* 안쪽 금색 테두리 - 동적으로 표시/숨김 */
+      /* 상단 테두리 */
+      .letter-paper::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 22px;
+        right: 22px;
+        height: 2px;
+        background: #e6c363;
+        pointer-events: none;
+        z-index: 10;
+        transition: opacity 0.3s ease;
+      }
+
+      /* 좌우 테두리 */
+      .letter-paper::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        border-left: 2px solid #e6c363;
+        border-right: 2px solid #e6c363;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      /* 스크롤 시 상단 테두리 숨김 */
+      .letter-paper.scrolled-top::before {
+        opacity: 0;
+      }
+
+      /* 하단 테두리 별도 요소 */
+      .letter-border-bottom {
+        position: absolute;
+        bottom: 20px;
+        left: 22px;
+        right: 22px;
+        height: 2px;
+        background: #e6c363;
+        pointer-events: none;
+        z-index: 10;
+        transition: opacity 0.3s ease;
+      }
+
+      /* 스크롤 시 하단 테두리 숨김 */
+      .letter-paper.scrolled-bottom .letter-border-bottom {
+        opacity: 0;
+      }
+
+      /* 스크롤 가능한 내용 영역 */
+      .letter-scroll {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding: 5px 10px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* 편지 내용 */
+      .letter-content {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+        padding: 40px 35px;
+      }
+
+      .letter-paper.show .letter-content {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .letter-content h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        font-weight: normal;
+        letter-spacing: 2px;
+      }
+
+      .letter-content p {
+        line-height: 2.6;
+        color: #444;
+        margin-bottom: 25px;
+        font-style: italic;
+        font-size: 1.2em;
+        text-align: justify;
+      }
+
+      .letter-content .signature {
+        text-align: right;
+        margin-top: 50px;
+        font-style: italic;
+        color: #666;
+        font-size: 1.3em;
+      }
+
+      /* 오디오 컨트롤 */
+      .audio-control {
+        position: fixed;
+        top: 25px;
+        left: 25px;
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 2000;
+        transition: all 0.3s ease;
+        opacity: 0.6;
+      }
+
+      .audio-control:hover {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+      }
+
+      .audio-control::before {
+        content: "🔊";
+        font-size: 18px;
+        filter: grayscale(0.3);
+      }
+
+      .audio-control.muted {
+        opacity: 0.4;
+      }
+
+      .audio-control.muted::before {
+        content: "🔇";
+      }
+
+      /* 반응형 */
+      @media (max-width: 768px) {
+        .tree-image {
+          max-width: 95%;
+        }
+
+        .letter-paper {
+          width: 90%;
+          height: 80vh;
+          padding: 15px;
+        }
+
+        .letter-paper::before {
+          top: 12px;
+          left: 14px;
+          right: 14px;
+        }
+
+        .letter-paper::after {
+          top: 12px;
+          bottom: 12px;
+          left: 12px;
+          right: 12px;
+        }
+
+        .letter-border-bottom {
+          bottom: 12px;
+          left: 14px;
+          right: 14px;
+        }
+
+        .letter-content {
+          padding: 30px 25px;
+        }
+
+        .letter-content h1 {
+          font-size: 1.8em;
+          margin-bottom: 30px;
+        }
+
+        .letter-content p {
+          font-size: 1.05em;
+          line-height: 1.8;
+        }
+
+        .letter-content .signature {
+          font-size: 1.1em;
+          margin-top: 40px;
+        }
+
+        .audio-control {
+          width: 40px;
+          height: 40px;
+          top: 20px;
+          left: 20px;
+        }
+
+        .audio-control::before {
+          font-size: 16px;
+        }
+
+        .click-hint {
+          font-size: 1.1em;
+          bottom: 10%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .letter-paper {
+          padding: 12px;
+        }
+
+        .letter-paper::before {
+          top: 10px;
+          left: 12px;
+          right: 12px;
+        }
+
+        .letter-paper::after {
+          top: 10px;
+          bottom: 10px;
+          left: 10px;
+          right: 10px;
+        }
+
+        .letter-border-bottom {
+          bottom: 10px;
+          left: 12px;
+          right: 12px;
+        }
+
+        .letter-content {
+          padding: 25px 20px;
+        }
+
+        .letter-content h1 {
+          font-size: 1.5em;
+          margin-bottom: 25px;
+        }
+
+        .letter-content p {
+          font-size: 0.95em;
+          line-height: 1.7;
+          margin-bottom: 20px;
+        }
+
+        .letter-content .signature {
+          font-size: 1em;
+          margin-top: 30px;
+        }
+
+        .click-hint {
+          font-size: 0.95em;
+          bottom: 8%;
+        }
+      }
+
+      /* 스크롤바 숨김 */
+      .letter-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .letter-scroll {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 눈송이들 -->
+    <div id="snowfall"></div>
+
+    <div class="container">
+      <!-- 트리 이미지 (닫힌 상태) -->
+      <img
+        src="christmas-tree.png"
+        alt="Christmas Tree"
+        class="tree-image"
+        id="treeImage"
+      />
+
+      <!-- Click Me 힌트 -->
+      <!-- <div class="click-hint" id="clickHint">LETTER: "Click ME!"</div> -->
+      <div class="click-hint" id="clickHint">
+        <span style="font-weight: 700; color: #c62836">LETTER:</span>"Click ME!"
+      </div>
+      <!-- 흰색 편지지 -->
+      <div class="letter-paper" id="letterPaper">
+        <div class="letter-border-bottom"></div>
+        <div class="letter-scroll" id="letterScroll">
+          <div class="letter-content">
+            <h3>Dearest Peter,</h3>
+            <br /><br />
+            <p>
+              어때. 좀 놀랐나?
+              <br />
+              <br />
+              나도 네 덕분에 웹
+              <span style="font-size: 0.7em; color: #747474"
+                >(NOT web shooters)</span
+              >도 만져보고.
+              <br />
+              어렵진 않았어. 전혀. 내 실력 알잖아?
+              <br />
+              운 좋게도 편지를 달 만한 트리도 없었지.
+              <br />
+              직접 찾아가 주는 서비스는 네가 처음이야. 그리고 마지막이고.
+              <br />
+              그러니 넌 즐기면 돼.
+            </p>
+            <br />
+            <p>
+              사실대로 말하자면,
+              <br />
+              크리스마스는 핑계고 그냥 편지 써주고 싶긴 했다.
+              <br />
+              모두가 그런 마음이겠지. 연말이니까 모두 들떠있고. 나도 그렇고.
+              마침 내 곁에는 네가 있고. 그러니 내 들뜬 기분을 네게도 나눠주고
+              싶어서.
+            </p>
+            <br />
+            <p>
+              내가 하는 애정 표현은 이런 거야. 좋아하면 물질적인 것들을 계속해서
+              주고 싶거든. 선물을 사주거나, 무언가를 만들어주거나, 편지를
+              써주거나. 공통점은 모두 네가 웃는 얼굴이 보고 싶다, 정도겠네.
+              <br /><br />
+              넷플릭스 구독권도 그렇고 초콜릿도 그렇고. 난 늘 너에게 뭔가를
+              해주고 싶었는데.
+              <br />
+              이제 그 이유를 알겠더라.
+              <br />
+              좋아해서 그런 거였어. 피터, 널 좋아해서.
+            </p>
+            <br />
+            <p>
+              전에 말했잖아. 난 네가 나보다 더 나은 사람이 되길 바란다고.
+              <br />
+              글쎄, 지금 생각해 보면 잘 모르겠어.
+              <br />
+              난 네가 평범한 사람이면 좋겠거든. 넌 날 좋은 사람이 되고 싶게
+              만드니까, 넌 그냥 평범한 사람 하는 거지.
+              <br /><br />
+              가끔 우울하고, 가끔 행복한 사람.
+              <br /><br />
+              너무 우울해도 날 부르고 너무 행복해도 날 불러야 해.
+              <br />
+              언제든 네 이야기에 귀를 기울여줄 네 스타크 씨가 여기 있잖아. 아주
+              오랫동안 버젓이 곁에 있었지.
+            </p>
+            <br />
+            <p>
+              넌 날 자꾸 다정하다고 말하는데, 그런 점을 알아봐 주는 네가 더
+              다정하다고. 이런 다정한 사람이 어떻게 내 애인인 건지. 가끔
+              놀란다니까. 너무 좋아서. 내가 인생을 아주 열심히 살았던 거겠지.
+              깜찍한 피터를, 깜찍한 너를 애인으로 두고.
+            </p>
+            <br />
+            <p>
+              사랑한다는 단어만으로는 내 애정을 다 못 담아. 좀 더 특별했으면
+              좋겠거든. 그래서......
+            </p>
+
+            <p style="text-align: center; font-weight: 500">
+              '난 너의 유일한 사람이 되고 싶어.'
+            </p>
+
+            <p>
+              이 정도면 되려나 모르겠네. 아무튼 그렇다고.
+              <br />
+              <br />
+              사랑해, 피터. 나의 유일한 피터.
+            </p>
+
+            <div class="signature">
+              Always yours,
+              <br />
+              T
+            </div>
+            <br /><br />
+            <p>P.S. 네게 편지 쓰는 시간조차 즐겁더라.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 오디오 플레이어 -->
+    <audio id="bgMusic" loop>
+      <source src="cherry.mp3" type="audio/mpeg" />
+    </audio>
+    <div class="audio-control" id="audioControl"></div>
+
+    <script>
+      // Roboto 폰트 로드
+      const link = document.createElement("link");
+      link.href =
+        "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap";
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
+
+      // 눈 내리는 효과
+      function createSnowflakes() {
+        const snowfall = document.getElementById("snowfall");
+        const snowflakes = ["❄", "❅", "❆", "✻", "✼"];
+
+        for (let i = 0; i < 70; i++) {
+          const snowflake = document.createElement("div");
+          snowflake.className = "snowflake";
+          snowflake.textContent =
+            snowflakes[Math.floor(Math.random() * snowflakes.length)];
+          snowflake.style.left = Math.random() * 100 + "%";
+          snowflake.style.animationDuration = Math.random() * 6 + 6 + "s";
+          snowflake.style.animationDelay = Math.random() * 5 + "s";
+          snowflake.style.fontSize = Math.random() * 12 + 12 + "px";
+          snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+          snowfall.appendChild(snowflake);
+        }
+      }
+
+      // 변수 선언
+      const treeImage = document.getElementById("treeImage");
+      const letterPaper = document.getElementById("letterPaper");
+      const letterScroll = document.getElementById("letterScroll");
+      const bgMusic = document.getElementById("bgMusic");
+      const audioControl = document.getElementById("audioControl");
+      const clickHint = document.getElementById("clickHint");
+      let isPlaying = false;
+      let clicked = false;
+      let isLetterOpen = false;
+
+      // 음악 자동 재생 - 여러 방법 시도 (모바일 브라우저 포함)
+      function tryAutoPlay() {
+        // 방법 1: 즉시 재생 시도
+        const playPromise = bgMusic.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              // 자동 재생 성공
+              isPlaying = true;
+              audioControl.classList.remove("muted");
+            })
+            .catch(() => {
+              // 자동 재생 실패 - 사용자 인터랙션 대기
+              isPlaying = false;
+              audioControl.classList.add("muted");
+
+              // 첫 클릭/터치 시 재생
+              const playOnInteraction = () => {
+                bgMusic
+                  .play()
+                  .then(() => {
+                    isPlaying = true;
+                    audioControl.classList.remove("muted");
+                  })
+                  .catch(() => {});
+                document.removeEventListener("click", playOnInteraction);
+                document.removeEventListener("touchstart", playOnInteraction);
+              };
+
+              document.addEventListener("click", playOnInteraction);
+              document.addEventListener("touchstart", playOnInteraction);
+            });
+        }
+      }
+
+      // 페이지 로드 즉시 재생 시도
+      setTimeout(tryAutoPlay, 100);
+
+      // 스크롤 감지 - 테두리 동적 표시/숨김
+      letterScroll.addEventListener("scroll", function () {
+        const scrollTop = this.scrollTop;
+        const scrollHeight = this.scrollHeight;
+        const clientHeight = this.clientHeight;
+        const scrollBottom = scrollHeight - scrollTop - clientHeight;
+
+        // 위에서 5px 이상 내려오면 상단 테두리 숨김
+        if (scrollTop > 5) {
+          letterPaper.classList.add("scrolled-top");
+        } else {
+          letterPaper.classList.remove("scrolled-top");
+        }
+
+        // 아래에서 5px 이상 올라오면 하단 테두리 숨김
+        if (scrollBottom > 5) {
+          letterPaper.classList.add("scrolled-bottom");
+        } else {
+          letterPaper.classList.remove("scrolled-bottom");
+        }
+      });
+
+      // 트리 클릭 이벤트
+      treeImage.addEventListener("click", function () {
+        if (!clicked) {
+          clicked = true;
+
+          // Click Me 힌트 숨기기
+          clickHint.classList.add("hidden");
+
+          // 1. 트리 이미지를 christmas-tree-open.png로 부드럽게 전환
+          this.classList.add("fade-out");
+
+          setTimeout(() => {
+            this.src = "christmas-tree-open.png";
+            this.classList.remove("fade-out");
+
+            // 1.5초 후에 편지지 등장
+            setTimeout(() => {
+              // 스크롤을 맨 위로 리셋
+              letterScroll.scrollTop = 0;
+
+              // 테두리 상태 초기화
+              letterPaper.classList.remove("scrolled-top");
+              letterPaper.classList.remove("scrolled-bottom");
+
+              letterPaper.classList.add("show");
+              isLetterOpen = true;
+            }, 1500);
+          }, 1000);
+        }
+      });
+
+      // 편지지 바깥 영역 클릭 시 닫기
+      document.addEventListener("click", function (e) {
+        if (
+          isLetterOpen &&
+          !letterPaper.contains(e.target) &&
+          e.target !== treeImage &&
+          e.target !== audioControl
+        ) {
+          // 편지지 닫기
+          letterPaper.classList.remove("show");
+          isLetterOpen = false;
+
+          // 트리를 닫힌 상태로 되돌리기
+          setTimeout(() => {
+            treeImage.classList.add("fade-out");
+            setTimeout(() => {
+              treeImage.src = "christmas-tree.png";
+              treeImage.classList.remove("fade-out");
+              clicked = false;
+
+              // Click Me 힌트 다시 보이기
+              clickHint.classList.remove("hidden");
+            }, 1000);
+          }, 500);
+        }
+      });
+
+      // 편지지 내부 클릭 시 이벤트 전파 방지
+      letterPaper.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+
+      // 편지지 스크롤 영역 터치 시 이벤트 전파 방지
+      letterScroll.addEventListener("touchstart", function (e) {
+        e.stopPropagation();
+      });
+
+      // 오디오 컨트롤 - 버튼 클릭했을 때만 on/off
+      audioControl.addEventListener("click", function (e) {
+        e.stopPropagation();
+
+        if (isPlaying) {
+          // 음악 끄기
+          bgMusic.pause();
+          this.classList.add("muted");
+          isPlaying = false;
+        } else {
+          // 음악 켜기
+          bgMusic.play().catch((err) => {
+            console.log("음악 재생 실패:", err);
+          });
+          this.classList.remove("muted");
+          isPlaying = true;
+        }
+      });
+
+      // 초기화
+      createSnowflakes();
+    </script>
+  </body>
+</html>
