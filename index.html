@@ -51,7 +51,7 @@
         color: rgba(255, 255, 255, 0.9);
         font-size: 1em;
         user-select: none;
-        z-index: 1000;
+        z-index: 5;
         animation: fall linear infinite;
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
       }
@@ -118,6 +118,9 @@
         pointer-events: none;
         opacity: 1;
         transition: opacity 0.5s ease;
+        /* white-space: nowrap; */
+        display: inline-block;
+        text-align: center;
       }
 
       .click-hint.hidden {
@@ -233,7 +236,7 @@
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
-        padding: 40px 35px;
+        padding: 35px 30px;
       }
 
       .letter-paper.show .letter-content {
@@ -323,8 +326,8 @@
         }
 
         .letter-paper {
-          width: 80%;
-          height: 75vh;
+          width: 85%;
+          height: 69vh;
           padding: 15px;
           /* max-width: 330px; */
         }
@@ -359,7 +362,7 @@
 
         .letter-content p {
           font-size: 1.4em;
-          line-height: 1.4;
+          line-height: 1.6;
         }
 
         .letter-content .signature {
@@ -379,16 +382,16 @@
         }
 
         .click-hint {
-          font-size: 1.5em;
+          font-size: 1.2em;
           bottom: 15%;
         }
       }
 
       @media (max-width: 480px) {
         .letter-paper {
-          width: 78%;
-          height: 68vh;
-          padding: 18px;
+          width: 82%;
+          height: 69vh;
+          padding: 15px;
         }
 
         .letter-paper::before {
@@ -411,7 +414,7 @@
         }
 
         .letter-content {
-          padding: 25px 20px;
+          padding: 20px 15px;
         }
 
         .letter-content h1 {
@@ -421,7 +424,7 @@
 
         .letter-content p {
           font-size: 1.2em;
-          line-height: 1.2;
+          line-height: 1.3;
           margin-bottom: 10px;
         }
 
@@ -431,7 +434,7 @@
         }
 
         .click-hint {
-          font-size: 1.5em;
+          font-size: 1.2em;
           bottom: 10%;
         }
       }
@@ -471,15 +474,15 @@
         <div class="letter-border-bottom"></div>
         <div class="letter-scroll" id="letterScroll">
           <div class="letter-content">
-            <h3
+            <h2
               style="margin-top: 1em; margin-bottom: 1em; margin-left: -0.25em"
             >
               Dearest Peter,
-            </h3>
+            </h2>
             <br />
             <p>
               어때. 좀 놀랐나?
-              <br />
+              <br /><br />
               나도 네 덕분에 웹
               <span style="font-size: 0.8em; color: #747474"
                 >(NOT web shooters)</span
@@ -539,9 +542,11 @@
               <br />
               좋아해서 그런 거였어. 피터, 널 좋아해서.
             </p>
-            <br />
+            <br /><br />
             <p>
-              전에 말했잖아. "And I wanted you to be better" 라고.
+              전에 말했잖아.
+              <br />
+              "And I wanted you to be better" 라고.
               <!-- 난 네가 나보다 더 나은 사람이 되길 바란다고. -->
               <br />
               글쎄, 지금 생각해 보면 잘 모르겠어.
@@ -556,7 +561,7 @@
               언제든 네 이야기에 귀를 기울여줄 네 스타크 씨가 여기 있잖아. 아주
               오랫동안 버젓이 곁에 있었지.
             </p>
-            <br />
+            <br /><br />
             <p>
               넌 날 자꾸 다정하다고 말하는데, 그런 점을 알아봐 주는 네가 더
               다정하다고. 이런 다정한 사람이 어떻게 내 애인인 건지. 가끔
@@ -568,11 +573,9 @@
               사랑한다는 단어만으로는 내 애정을 다 못 담아. 좀 더 특별했으면
               좋겠거든. 그래서......
             </p>
-
-            <p style="text-align: center; font-weight: 500">
-              '난 너의 유일한 사람이 되고 싶어.'
-            </p>
-
+            <br />
+            <p style="text-align: center">'난 너의 유일한 사람이 되고 싶어.'</p>
+            <br />
             <p>
               이 정도면 되려나 모르겠네. 아무튼 그렇다고.
               <br />
