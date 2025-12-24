@@ -4,10 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>my-dearest-peter-xoxo</title>
-    <link
+    <!-- <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>"
-    />
+    /> -->
+    <!-- <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap"
+      rel="stylesheet"
+    /> -->
     <style>
       * {
         margin: 0;
@@ -15,8 +19,17 @@
         box-sizing: border-box;
       }
 
+      @font-face {
+        font-family: "gang";
+        src: url("./fonts/nanum.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
       body {
-        font-family: "Roboto", sans-serif;
+        /* font-family: "Roboto", sans-serif; */
+        /* font-family: "Nanum Brush Script", cursive; */
+        font-family: "gang", cursive;
         overflow: hidden;
         background: linear-gradient(
           to bottom,
@@ -31,7 +44,7 @@
         position: relative;
       }
 
-      /* 눈송이 */
+      /* 눈 효과 */
       .snowflake {
         position: fixed;
         top: -10px;
@@ -49,7 +62,6 @@
         }
       }
 
-      /* 컨테이너 */
       .container {
         position: relative;
         width: 100%;
@@ -59,7 +71,6 @@
         align-items: center;
       }
 
-      /* 트리 이미지 */
       .tree-image {
         max-width: 90%;
         max-height: 90vh;
@@ -127,13 +138,13 @@
         }
       }
 
-      /* 흰색 편지지 */
+      /* 편지지 */
       .letter-paper {
         position: fixed;
         width: 85%;
-        height: 85vh;
-        max-width: 800px;
-        max-height: 700px;
+        height: 90vh;
+        max-width: 900px;
+        max-height: 800px;
         background: #ffffff;
         border: 2px solid #e0e0e0;
         border-radius: 8px;
@@ -240,9 +251,9 @@
       }
 
       .letter-content p {
-        line-height: 2.6;
+        line-height: 1.5;
         color: #444;
-        margin-bottom: 25px;
+        margin-bottom: 15px;
         font-style: italic;
         font-size: 1.2em;
         text-align: justify;
@@ -256,7 +267,15 @@
         font-size: 1.3em;
       }
 
-      /* 오디오 컨트롤 */
+      /* ts signature img */
+      .letter-content .stark-signature {
+        position: relative;
+        /* width: 30%;
+        min-height: 10vh; */
+        width: 6em;
+      }
+
+      /* 오디오 */
       .audio-control {
         position: fixed;
         top: 25px;
@@ -304,9 +323,10 @@
         }
 
         .letter-paper {
-          width: 90%;
-          height: 80vh;
+          width: 80%;
+          height: 75vh;
           padding: 15px;
+          /* max-width: 330px; */
         }
 
         .letter-paper::before {
@@ -339,7 +359,7 @@
 
         .letter-content p {
           font-size: 1.05em;
-          line-height: 1.8;
+          line-height: 1.4;
         }
 
         .letter-content .signature {
@@ -360,13 +380,15 @@
 
         .click-hint {
           font-size: 1.1em;
-          bottom: 10%;
+          bottom: 15%;
         }
       }
 
       @media (max-width: 480px) {
         .letter-paper {
-          padding: 12px;
+          width: 78%;
+          height: 68vh;
+          padding: 18px;
         }
 
         .letter-paper::before {
@@ -399,8 +421,8 @@
 
         .letter-content p {
           font-size: 0.95em;
-          line-height: 1.7;
-          margin-bottom: 20px;
+          line-height: 1.2;
+          margin-bottom: 10px;
         }
 
         .letter-content .signature {
@@ -410,7 +432,7 @@
 
         .click-hint {
           font-size: 0.95em;
-          bottom: 8%;
+          bottom: 10%;
         }
       }
 
@@ -438,24 +460,28 @@
         id="treeImage"
       />
 
-      <!-- Click Me 힌트 -->
-      <!-- <div class="click-hint" id="clickHint">LETTER: "Click ME!"</div> -->
+      <!-- Touch Me 힌트 -->
+      <!-- <div class="click-hint" id="clickHint">LETTER: "Touch ME!"</div> -->
       <div class="click-hint" id="clickHint">
-        <span style="font-weight: 700; color: #c62836">LETTER:</span>"Click ME!"
+        <span style="font-weight: 700; color: #c62836">LETTER: </span>"Touch
+        ME!"
       </div>
-      <!-- 흰색 편지지 -->
+      <!-- 편지 내용 시작 -->
       <div class="letter-paper" id="letterPaper">
         <div class="letter-border-bottom"></div>
         <div class="letter-scroll" id="letterScroll">
           <div class="letter-content">
-            <h3>Dearest Peter,</h3>
-            <br /><br />
+            <h3
+              style="margin-top: 1em; margin-bottom: 1em; margin-left: -0.25em"
+            >
+              Dearest Peter,
+            </h3>
+            <br />
             <p>
               어때. 좀 놀랐나?
               <br />
-              <br />
               나도 네 덕분에 웹
-              <span style="font-size: 0.7em; color: #747474"
+              <span style="font-size: 0.8em; color: #747474"
                 >(NOT web shooters)</span
               >도 만져보고.
               <br />
@@ -467,6 +493,29 @@
               <br />
               그러니 넌 즐기면 돼.
             </p>
+            <br />
+            <p>
+              기억이 나려나 모르겠네.
+              <br />
+              내가 cherry 노래만 몇백 번 들었다던 날에 만들었다. 네가 급하게 한
+              시간 자리 비웠던 시간 전 후로 손본 거니까, 겨우 한두 시간 정도
+              걸렸던가. 트리 디자인까지 포함해서.
+              <br />
+              우와, 역시 난 대단한데.
+              <br />
+              <br />
+              만드는 내내 테스트 하느라 cherry 노래가 무한 재생 돼서 몇백 번
+              들었다고 한 거야. 그래도 질리지가 않더라.
+              <br />
+              난 원래 하나에 빠지면 진득하게 좋아하는 편이긴 해. 그게
+              사람이더라도 예외는 아니지.
+              <br />
+              <br />
+              이해했나?
+              <br />
+              널 진득하게 좋아할 것 같다고. 내가.
+            </p>
+            <br />
             <br />
             <p>
               사실대로 말하자면,
@@ -483,8 +532,8 @@
               주고 싶거든. 선물을 사주거나, 무언가를 만들어주거나, 편지를
               써주거나. 공통점은 모두 네가 웃는 얼굴이 보고 싶다, 정도겠네.
               <br /><br />
-              넷플릭스 구독권도 그렇고 초콜릿도 그렇고. 난 늘 너에게 뭔가를
-              해주고 싶었는데.
+              초콜릿도 그렇고. 롱아일랜드 시티에 근사한 빌딩 하나 준 것도
+              그렇고. 난 늘 너에게 뭔가를 해주고 싶었는데.
               <br />
               이제 그 이유를 알겠더라.
               <br />
@@ -492,7 +541,8 @@
             </p>
             <br />
             <p>
-              전에 말했잖아. 난 네가 나보다 더 나은 사람이 되길 바란다고.
+              전에 말했잖아. "And I wanted you to be better" 라고.
+              <!-- 난 네가 나보다 더 나은 사람이 되길 바란다고. -->
               <br />
               글쎄, 지금 생각해 보면 잘 모르겠어.
               <br />
@@ -533,7 +583,12 @@
             <div class="signature">
               Always yours,
               <br />
-              T
+              <!-- T -->
+              <img
+                src="signature.png"
+                alt="TS-signature"
+                class="stark-signature"
+              />
             </div>
             <br /><br />
             <p>P.S. 네게 편지 쓰는 시간조차 즐겁더라.</p>
@@ -652,7 +707,7 @@
         if (!clicked) {
           clicked = true;
 
-          // Click Me 힌트 숨기기
+          // Touch Me 힌트 숨기기
           clickHint.classList.add("hidden");
 
           // 1. 트리 이미지를 christmas-tree-open.png로 부드럽게 전환
@@ -673,6 +728,10 @@
 
               letterPaper.classList.add("show");
               isLetterOpen = true;
+
+              // 트리를 클릭 불가능하게 (z-index 낮추기)
+              treeImage.style.zIndex = "1";
+              treeImage.style.pointerEvents = "none";
             }, 1500);
           }, 1000);
         }
@@ -683,7 +742,7 @@
         if (
           isLetterOpen &&
           !letterPaper.contains(e.target) &&
-          e.target !== treeImage &&
+          // e.target !== treeImage &&
           e.target !== audioControl
         ) {
           // 편지지 닫기
@@ -698,6 +757,9 @@
               treeImage.classList.remove("fade-out");
               clicked = false;
 
+              // 트리 다시 클릭 가능하게
+              treeImage.style.zIndex = "10";
+              treeImage.style.pointerEvents = "auto";
               // Click Me 힌트 다시 보이기
               clickHint.classList.remove("hidden");
             }, 1000);
